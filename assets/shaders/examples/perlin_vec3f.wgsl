@@ -14,6 +14,6 @@ fn fragment(
     #import bevy_pbr::mesh_vertex_output
 ) -> @location(0) vec4<f32> {
     // return 1.0;
-    let r = noise_perlin_vec3f(vec3(material.time, world_position.x, world_position.y));
+    let r = noise_perlin_vec3f(vec3(world_position.x, world_position.y, world_position.z));
     return vec4(r, r, r, 1.0);
 }
