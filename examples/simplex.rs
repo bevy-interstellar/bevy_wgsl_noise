@@ -13,12 +13,14 @@ struct Movable;
 #[uuid = "f3a5acb9-88f8-4f84-b54c-d113138451d8"]
 struct CustomMaterial {
     #[uniform(0)]
-    time: f32,
+    _time: f32,
+    #[uniform(0)]
+    _dimension: i32,
 }
 
 impl Material for CustomMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/examples/simplex_vec2f.wgsl".into()
+        "shaders/examples/simplex.wgsl".into()
     }
 }
 
@@ -39,11 +41,35 @@ fn setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<CustomMaterial>>,
 ) {
-    let mesh: Mesh = Cube::new(3.0).into();
+    let mesh: Mesh = Cube::new(1.0).into();
 
     commands.spawn(MaterialMeshBundle::<CustomMaterial> {
-        mesh: meshes.add(mesh),
-        material: materials.add(CustomMaterial { time: 0.0 }),
+        mesh: meshes.add(mesh.clone()),
+        material: materials.add(CustomMaterial {
+            _time: 0.0,
+            _dimension: 2,
+        }),
+        transform: Transform::from_xyz(-2.0, 0.0, 0.0),
+        ..default()
+    });
+
+    commands.spawn(MaterialMeshBundle::<CustomMaterial> {
+        mesh: meshes.add(mesh.clone()),
+        material: materials.add(CustomMaterial {
+            _time: 0.0,
+            _dimension: 3,
+        }),
+        transform: Transform::from_xyz(0.0, 0.0, 0.0),
+        ..default()
+    });
+
+    commands.spawn(MaterialMeshBundle::<CustomMaterial> {
+        mesh: meshes.add(mesh.clone()),
+        material: materials.add(CustomMaterial {
+            _time: 0.0,
+            _dimension: 4,
+        }),
+        transform: Transform::from_xyz(2.0, 0.0, 0.0),
         ..default()
     });
 
@@ -61,7 +87,7 @@ fn setup(
 
 fn update_time(time: Res<Time>, mut materials: ResMut<Assets<CustomMaterial>>) {
     for (_, material) in materials.iter_mut() {
-        material.time = time.elapsed_seconds_f64() as f32;
+        material._time = time.elapsed_seconds_f64() as f32;
     }
 }
 
