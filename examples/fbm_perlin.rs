@@ -15,14 +15,14 @@ struct CustomMaterial {
     #[uniform(0)]
     _time: f32,
     #[uniform(0)]
-    _dimension: i32,
+    _luca: f32,
     #[uniform(0)]
-    _perlin: i32,
+    _gain: f32,
 }
 
 impl Material for CustomMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/examples/fbm.wgsl".into()
+        "shaders/examples/fbm_perlin.wgsl".into()
     }
 }
 
@@ -45,71 +45,23 @@ fn setup(
 ) {
     let mesh: Mesh = Cube::new(1.0).into();
 
-    commands.spawn(MaterialMeshBundle::<CustomMaterial> {
-        mesh: meshes.add(mesh.clone()),
-        material: materials.add(CustomMaterial {
-            _time: 0.0,
-            _dimension: 2,
-            _perlin: 1,
-        }),
-        transform: Transform::from_xyz(-2.0, 1.0, 0.0),
-        ..default()
-    });
+    for s in 0..5 {
+        for t in 0..5 {
+            let luca = s as f32 / 2.0 + 0.5;
+            let gain = t as f32 / 2.0 + 0.5;
 
-    commands.spawn(MaterialMeshBundle::<CustomMaterial> {
-        mesh: meshes.add(mesh.clone()),
-        material: materials.add(CustomMaterial {
-            _time: 0.0,
-            _dimension: 3,
-            _perlin: 1,
-        }),
-        transform: Transform::from_xyz(0.0, 1.0, 0.0),
-        ..default()
-    });
-
-    commands.spawn(MaterialMeshBundle::<CustomMaterial> {
-        mesh: meshes.add(mesh.clone()),
-        material: materials.add(CustomMaterial {
-            _time: 0.0,
-            _dimension: 4,
-            _perlin: 1,
-        }),
-        transform: Transform::from_xyz(2.0, 1.0, 0.0),
-        ..default()
-    });
-
-    commands.spawn(MaterialMeshBundle::<CustomMaterial> {
-        mesh: meshes.add(mesh.clone()),
-        material: materials.add(CustomMaterial {
-            _time: 0.0,
-            _dimension: 2,
-            _perlin: 0,
-        }),
-        transform: Transform::from_xyz(-2.0, -1.0, 0.0),
-        ..default()
-    });
-
-    commands.spawn(MaterialMeshBundle::<CustomMaterial> {
-        mesh: meshes.add(mesh.clone()),
-        material: materials.add(CustomMaterial {
-            _time: 0.0,
-            _dimension: 3,
-            _perlin: 0,
-        }),
-        transform: Transform::from_xyz(0.0, -1.0, 0.0),
-        ..default()
-    });
-
-    commands.spawn(MaterialMeshBundle::<CustomMaterial> {
-        mesh: meshes.add(mesh.clone()),
-        material: materials.add(CustomMaterial {
-            _time: 0.0,
-            _dimension: 4,
-            _perlin: 0,
-        }),
-        transform: Transform::from_xyz(2.0, -1.0, 0.0),
-        ..default()
-    });
+            commands.spawn(MaterialMeshBundle::<CustomMaterial> {
+                mesh: meshes.add(mesh.clone()),
+                material: materials.add(CustomMaterial {
+                    _time: 0.0,
+                    _luca: luca,
+                    _gain: gain,
+                }),
+                transform: Transform::from_xyz(s as f32 - 2.0, t as f32 - 2.0, 0.0),
+                ..default()
+            });
+        }
+    }
 
     let camera_origin = commands.spawn((TransformBundle::default(), Movable)).id();
 
