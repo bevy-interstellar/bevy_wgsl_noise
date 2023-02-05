@@ -1,0 +1,3 @@
+[submodule "assets/shaders/noise"]
+	path = assets/shaders/noise
+	url = https://github.com/bevy-interstellar/wgsl_noise.git
