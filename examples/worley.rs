@@ -1,8 +1,7 @@
 use bevy::{
-    pbr::{MaterialPipeline, MaterialPipelineKey},
     prelude::{shape::Cube, *},
     reflect::TypeUuid,
-    render::{mesh::MeshVertexBufferLayout, render_resource::*},
+    render::render_resource::*,
 };
 
 use bevy_wgsl_noise::WgslNoisePlugin;
@@ -14,23 +13,14 @@ struct Movable;
 #[uuid = "f3a5acb9-88f8-4f84-b54c-d113138451d8"]
 struct CustomMaterial {
     #[uniform(0)]
-    time: f32,
+    _time: f32,
+    #[uniform(0)]
+    _dimension: i32,
 }
 
 impl Material for CustomMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/examples/worley_vec2f.wgsl".into()
-    }
-
-    fn specialize(
-        _pipeline: &MaterialPipeline<Self>,
-        descriptor: &mut RenderPipelineDescriptor,
-        _layout: &MeshVertexBufferLayout,
-        _key: MaterialPipelineKey<Self>,
-    ) -> Result<(), SpecializedMeshPipelineError> {
-        let _fragment = descriptor.fragment.as_mut().unwrap();
-        // _fragment.shader_defs.push("WORLEY_IGNORE_F2".into());
-        Ok(())
+        "shaders/examples/worley.wgsl".into()
     }
 }
 
@@ -51,11 +41,25 @@ fn setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<CustomMaterial>>,
 ) {
-    let mesh: Mesh = Cube::new(3.0).into();
+    let mesh: Mesh = Cube::new(1.0).into();
 
     commands.spawn(MaterialMeshBundle::<CustomMaterial> {
-        mesh: meshes.add(mesh),
-        material: materials.add(CustomMaterial { time: 0.0 }),
+        mesh: meshes.add(mesh.clone()),
+        material: materials.add(CustomMaterial {
+            _time: 0.0,
+            _dimension: 2,
+        }),
+        transform: Transform::from_xyz(0.0, -1.0, 0.0),
+        ..default()
+    });
+
+    commands.spawn(MaterialMeshBundle::<CustomMaterial> {
+        mesh: meshes.add(mesh.clone()),
+        material: materials.add(CustomMaterial {
+            _time: 0.0,
+            _dimension: 3,
+        }),
+        transform: Transform::from_xyz(0.0, 1.0, 0.0),
         ..default()
     });
 
@@ -73,7 +77,7 @@ fn setup(
 
 fn update_time(time: Res<Time>, mut materials: ResMut<Assets<CustomMaterial>>) {
     for (_, material) in materials.iter_mut() {
-        material.time = time.elapsed_seconds_f64() as f32;
+        material._time = time.elapsed_seconds_f64() as f32;
     }
 }
 
