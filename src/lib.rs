@@ -16,13 +16,19 @@ impl Default for WgslNoisePlugin {
 
 fn load_noise_shader_file(mut shaders: ResMut<Assets<Shader>>) {
     for shader in [
+        // common utility functions
         Shader::from_wgsl(include_str!("../assets/shaders/noise/common.wgsl")),
+        // random noise
+        Shader::from_wgsl(include_str!("../assets/shaders/noise/random_all.wgsl")),
+        // perlin noise
         Shader::from_wgsl(include_str!("../assets/shaders/noise/perlin_vec2f.wgsl")),
         Shader::from_wgsl(include_str!("../assets/shaders/noise/perlin_vec3f.wgsl")),
         Shader::from_wgsl(include_str!("../assets/shaders/noise/perlin_vec4f.wgsl")),
+        // simplex noise
         Shader::from_wgsl(include_str!("../assets/shaders/noise/simplex_vec2f.wgsl")),
         Shader::from_wgsl(include_str!("../assets/shaders/noise/simplex_vec3f.wgsl")),
         Shader::from_wgsl(include_str!("../assets/shaders/noise/simplex_vec4f.wgsl")),
+        // worley noise
         Shader::from_wgsl(include_str!("../assets/shaders/noise/worley_vec2f.wgsl")),
         Shader::from_wgsl(include_str!("../assets/shaders/noise/worley_vec3f.wgsl")),
     ] {
