@@ -17,5 +17,11 @@ fn fragment(
 
     let r = noise_worley_vec2f(vec2(world_position.x + material.time, world_position.y));
 
-    return vec4(r, r, r, 1.0);
+    if world_position.x > 0.33333333 {
+        return vec4(r.x, r.x, r.x, 1.0);
+    } else if world_position.x > -0.33333333 {
+        return vec4(r.y - r.x, r.y - r.x, r.y - r.x, 1.0);
+    } else {
+        return vec4(r.y, r.y, r.y, 1.0);
+    }
 }
