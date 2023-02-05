@@ -1,8 +1,4 @@
-#import noise::common
-
-#import noise::simplex_vec2f
-#import noise::simplex_vec3f
-#import noise::simplex_vec4f
+#import noise::prelude
 
 struct CustomMaterial {
     time: f32,

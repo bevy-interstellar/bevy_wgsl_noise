@@ -31,6 +31,8 @@ fn load_noise_shader_file(mut shaders: ResMut<Assets<Shader>>) {
         // worley noise
         Shader::from_wgsl(include_str!("../assets/shaders/noise/worley_vec2f.wgsl")),
         Shader::from_wgsl(include_str!("../assets/shaders/noise/worley_vec3f.wgsl")),
+        // prelude
+        Shader::from_wgsl(include_str!("../assets/shaders/noise/prelude.wgsl")),
     ] {
         let handle = HandleId::random::<Shader>();
         shaders.set_untracked(handle, shader);

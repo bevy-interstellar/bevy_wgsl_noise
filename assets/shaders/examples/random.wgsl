@@ -1,6 +1,4 @@
-#import noise::common
-
-#import noise::random_all
+#import noise::prelude
 
 struct CustomMaterial {
     time: f32,
