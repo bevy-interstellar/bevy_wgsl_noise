@@ -39,7 +39,7 @@ fn setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<CustomMaterial>>,
 ) {
-    let mesh: Mesh = Cube::default().into();
+    let mesh: Mesh = Cube::new(3.0).into();
 
     commands.spawn(MaterialMeshBundle::<CustomMaterial> {
         mesh: meshes.add(mesh),
