@@ -1,7 +1,8 @@
 use bevy::{
+    pbr::{MaterialPipeline, MaterialPipelineKey},
     prelude::{shape::Cube, *},
     reflect::TypeUuid,
-    render::render_resource::*,
+    render::{mesh::MeshVertexBufferLayout, render_resource::*},
 };
 
 use bevy_wgsl_noise::WgslNoisePlugin;
@@ -19,6 +20,17 @@ struct CustomMaterial {
 impl Material for CustomMaterial {
     fn fragment_shader() -> ShaderRef {
         "shaders/examples/worley_vec2f.wgsl".into()
+    }
+
+    fn specialize(
+        _pipeline: &MaterialPipeline<Self>,
+        descriptor: &mut RenderPipelineDescriptor,
+        _layout: &MeshVertexBufferLayout,
+        _key: MaterialPipelineKey<Self>,
+    ) -> Result<(), SpecializedMeshPipelineError> {
+        let _fragment = descriptor.fragment.as_mut().unwrap();
+        // _fragment.shader_defs.push("WORLEY_IGNORE_F2".into());
+        Ok(())
     }
 }
 
