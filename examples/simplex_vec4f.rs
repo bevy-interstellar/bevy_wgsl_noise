@@ -18,7 +18,7 @@ struct CustomMaterial {
 
 impl Material for CustomMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/examples/perlin_vec3f.wgsl".into()
+        "shaders/examples/simplex_vec4f.wgsl".into()
     }
 }
 

@@ -20,6 +20,9 @@ fn load_noise_shader_file(mut shaders: ResMut<Assets<Shader>>) {
         Shader::from_wgsl(include_str!("../assets/shaders/noise/perlin_vec2f.wgsl")),
         Shader::from_wgsl(include_str!("../assets/shaders/noise/perlin_vec3f.wgsl")),
         Shader::from_wgsl(include_str!("../assets/shaders/noise/perlin_vec4f.wgsl")),
+        Shader::from_wgsl(include_str!("../assets/shaders/noise/simplex_vec2f.wgsl")),
+        Shader::from_wgsl(include_str!("../assets/shaders/noise/simplex_vec3f.wgsl")),
+        Shader::from_wgsl(include_str!("../assets/shaders/noise/simplex_vec4f.wgsl")),
     ] {
         let handle = HandleId::random::<Shader>();
         shaders.set_untracked(handle, shader);
