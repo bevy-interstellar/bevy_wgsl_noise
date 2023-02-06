@@ -33,6 +33,8 @@ fn load_noise_shader_file(mut shaders: ResMut<Assets<Shader>>) {
         Shader::from_wgsl(include_str!("../assets/shaders/noise/worley_vec3f.wgsl")),
         // fractal brownian motion
         Shader::from_wgsl(include_str!("../assets/shaders/noise/fbm_all.wgsl")),
+        // domain distortion on fbm
+        Shader::from_wgsl(include_str!("../assets/shaders/noise/distortion_all.wgsl")),
         // prelude
         Shader::from_wgsl(include_str!("../assets/shaders/noise/prelude.wgsl")),
     ] {
