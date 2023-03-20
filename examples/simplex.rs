@@ -26,7 +26,7 @@ impl Material for CustomMaterial {
 
 fn main() {
     App::new()
-        .insert_resource(Msaa { samples: 4 })
+        .insert_resource(Msaa::Sample4)
         .add_plugins(DefaultPlugins)
         .add_plugin(MaterialPlugin::<CustomMaterial>::default())
         .add_plugin(WgslNoisePlugin::default())

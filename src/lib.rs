@@ -18,8 +18,6 @@ fn load_noise_shader_file(mut shaders: ResMut<Assets<Shader>>) {
     for shader in [
         // common utility functions
         Shader::from_wgsl(include_str!("../assets/shaders/noise/common.wgsl")),
-        // random noise
-        Shader::from_wgsl(include_str!("../assets/shaders/noise/random_all.wgsl")),
         // perlin noise
         Shader::from_wgsl(include_str!("../assets/shaders/noise/perlin_vec2f.wgsl")),
         Shader::from_wgsl(include_str!("../assets/shaders/noise/perlin_vec3f.wgsl")),
